@@ -2,13 +2,15 @@ using UnityEngine;
 
 public class RubyController : MonoBehaviour
 { 
-    public int maxHealth = 5; 
-    public int currentHealth;
-    
+    public int maxHealth = 5;
+
     private Rigidbody2D rigidbody2d;
     private float horizontal; 
     private float vertical;
     public float speed = 3.0f;
+    
+    public int health { get { return currentHealth; } }
+    public int currentHealth;
     
      // Start is called before the first frame update
      void Start()
