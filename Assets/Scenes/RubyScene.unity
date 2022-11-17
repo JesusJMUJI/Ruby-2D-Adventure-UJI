@@ -3472,11 +3472,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3016074384635044889, guid: 568bdddce82251145b41cc3bb1139ec9, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -5.96
+      value: -7.22
       objectReference: {fileID: 0}
     - target: {fileID: 3016074384635044889, guid: 568bdddce82251145b41cc3bb1139ec9, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.12
+      value: 0.8
       objectReference: {fileID: 0}
     - target: {fileID: 3016074384635044889, guid: 568bdddce82251145b41cc3bb1139ec9, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3563,17 +3563,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5295256553172089526, guid: e030ab11de118a345a3d7dc78bdfc23b, type: 3}
-      propertyPath: maxHealth
-      value: 10
-      objectReference: {fileID: 0}
     - target: {fileID: 5295256553172089531, guid: e030ab11de118a345a3d7dc78bdfc23b, type: 3}
       propertyPath: m_Name
-      value: ruby_sprite
-      objectReference: {fileID: 0}
-    - target: {fileID: 5295256553172089531, guid: e030ab11de118a345a3d7dc78bdfc23b, type: 3}
-      propertyPath: m_IsActive
-      value: 1
+      value: Ruby
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e030ab11de118a345a3d7dc78bdfc23b, type: 3}
@@ -3584,6 +3576,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 8717007919113663090, guid: 5a683a09daa1dec499695f6545e026f7, type: 3}
+      propertyPath: m_SpriteTilingProperty.pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8717007919113663090, guid: 5a683a09daa1dec499695f6545e026f7, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.x
+      value: 2.56
+      objectReference: {fileID: 0}
+    - target: {fileID: 8717007919113663090, guid: 5a683a09daa1dec499695f6545e026f7, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.y
+      value: 2.56
+      objectReference: {fileID: 0}
     - target: {fileID: 8717007919113663091, guid: 5a683a09daa1dec499695f6545e026f7, type: 3}
       propertyPath: m_Name
       value: RobotEnemy
@@ -3594,11 +3598,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8717007919113663095, guid: 5a683a09daa1dec499695f6545e026f7, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.04
+      value: 0.01
       objectReference: {fileID: 0}
     - target: {fileID: 8717007919113663095, guid: 5a683a09daa1dec499695f6545e026f7, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.78
+      value: 1.6
       objectReference: {fileID: 0}
     - target: {fileID: 8717007919113663095, guid: 5a683a09daa1dec499695f6545e026f7, type: 3}
       propertyPath: m_LocalPosition.z

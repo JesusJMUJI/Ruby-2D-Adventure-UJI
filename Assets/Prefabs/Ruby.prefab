@@ -9,13 +9,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5295256553172089525}
-  - component: {fileID: 5295256553172089524}
   - component: {fileID: 5295256553172089526}
+  - component: {fileID: 5295256553172089524}
   - component: {fileID: 5295256553172089527}
   - component: {fileID: 2365989161262249391}
   - component: {fileID: 1940214033756420656}
-  m_Layer: 0
-  m_Name: ruby_sprite
+  m_Layer: 8
+  m_Name: Ruby
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -35,6 +35,25 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5295256553172089526
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5295256553172089531}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1540d0da6483074084dcc1effd6022f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 10
+  timeInvincible: 2
+  speed: 3
+  currentHealth: 0
+  isInvincible: 0
+  invincibleTimer: 0
+  projectilePrefab: {fileID: 8414831720212621377, guid: 143bf8097b6127f4daf3a324e895ceb8, type: 3}
 --- !u!212 &5295256553172089524
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -86,24 +105,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 1
---- !u!114 &5295256553172089526
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5295256553172089531}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b1540d0da6483074084dcc1effd6022f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHealth: 5
-  timeInvincible: 2
-  speed: 3
-  currentHealth: 0
-  isInvincible: 0
-  invincibleTimer: 0
 --- !u!50 &5295256553172089527
 Rigidbody2D:
   serializedVersion: 4
