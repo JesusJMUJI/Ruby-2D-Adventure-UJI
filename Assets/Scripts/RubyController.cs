@@ -37,6 +37,15 @@ public class RubyController : MonoBehaviour
          horizontal = Input.GetAxis("Horizontal");
          vertical = Input.GetAxis("Vertical");
 
+         if(Input.GetKeyDown(KeyCode.LeftShift))
+         {
+             speed = 10.0f;
+         }
+         if(Input.GetKeyUp(KeyCode.LeftShift))
+         {
+             speed = 3.0f;
+         }
+         
          Vector2 move = new Vector2(horizontal, vertical);
          
          if(Input.GetKeyDown(KeyCode.C))

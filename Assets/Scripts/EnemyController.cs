@@ -13,6 +13,9 @@ public class EnemyController : MonoBehaviour
     float timer;
     int direction = 1;
     
+    public ParticleSystem smokeEffect;
+    public ParticleSystem hitEffect;
+    bool broken = true;
     Animator animator;
     
     // Start is called before the first frame update
@@ -31,6 +34,12 @@ public class EnemyController : MonoBehaviour
         {
             direction = -direction;
             timer = changeTime;
+        }
+        
+        //remember ! inverse the test, so if broken is true !broken will be false and return won’t be executed.
+        if(!broken)
+        {
+            return;
         }
     }
     
@@ -52,6 +61,21 @@ public class EnemyController : MonoBehaviour
         }
         
         rigidbody2D.MovePosition(position);
+        
+        //remember ! inverse the test, so if broken is true !broken will be false and return won’t be executed.
+        if(!broken)
+        {
+            return;
+        }
+    }
+
+    public void Fix()
+    {
+        broken = false;
+        rigidbody2D.simulated = false;
+        animator.SetTrigger("Fixed");
+        hitEffect.Play();
+        smokeEffect.Stop();
     }
     
     void OnCollisionEnter2D(Collision2D other)
