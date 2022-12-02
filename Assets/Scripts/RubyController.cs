@@ -13,6 +13,7 @@ public class RubyController : MonoBehaviour
     public int health { get { return currentHealth; } }
     public int currentHealth;
     
+    
     public bool isInvincible;
     public float invincibleTimer;
     
@@ -70,6 +71,15 @@ public class RubyController : MonoBehaviour
              if (invincibleTimer < 0)
                  isInvincible = false;
          }
+
+         if (Input.GetKeyDown(KeyCode.X))
+         {
+             RaycastHit2D hit = Physics2D.Raycast((rigidbody2d.position + Vector2.up * 0.2f), lookDirection, 1.5f, LayerMask.GetMask("NPC"));
+             if (hit.collider != null)
+             {
+                 Debug.Log("Raycast has hit the object " + hit.collider.gameObject);
+             }
+         }
      }
  
      void FixedUpdate()
@@ -92,7 +102,7 @@ public class RubyController : MonoBehaviour
          }
          animator.SetTrigger("Hit");
          currentHealth = Mathf.Clamp(currentHealth + amount, 0, maxHealth);
-         Debug.Log(currentHealth + "/" + maxHealth);
+         UIHealthBar.instance.SetValue(currentHealth / (float)maxHealth);
      }
 
      void Launch()
