@@ -1,27 +1,39 @@
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.SocialPlatforms;
 
 public class RubyController : MonoBehaviour
-{ 
-    public int maxHealth = 5;
-    public float timeInvincible = 2.0f;
-
-    private Rigidbody2D rigidbody2d;
-    private float horizontal; 
-    private float vertical;
-    public float speed = 3.0f;
+{
+    #region Variables
     
+    [Header("Health and related")]
+    //
+    public int maxHealth = 5;
+    [SerializeField] private float timeInvincible = 2.0f;
     public int health { get { return currentHealth; } }
     public int currentHealth;
-    
-    
-    public bool isInvincible;
-    public float invincibleTimer;
-    
+    [SerializeField] private bool isInvincible;
+    [SerializeField] private float invincibleTimer;
+    //
+    [Header("Movement")]
+    [SerializeField] private Rigidbody2D rigidbody2d;
+    [SerializeField] private float horizontal; 
+    [SerializeField] private float vertical;    
+    [Range(3f, 7f)]
+    [SerializeField] private float speed = 4.0f;
+
+    private float maxSpeed = 7.0f;
+    private float minSpeed = 3.0f;
+
+    [Header("Shooting")]
     public GameObject projectilePrefab;
     
     Animator animator;
     Vector2 lookDirection = new Vector2(1, 0);
     
+    #endregion
+
+    /*_____________________________________________________________________________________*/
      // Start is called before the first frame update
      void Start()
      {
@@ -38,15 +50,16 @@ public class RubyController : MonoBehaviour
          horizontal = Input.GetAxis("Horizontal");
          vertical = Input.GetAxis("Vertical");
 
-         if(Input.GetKeyDown(KeyCode.LeftShift))
+         if (Input.GetKey(KeyCode.LeftShift) && speed <= maxSpeed)
          {
-             speed = 10.0f;
+             print("Sprinting"); ;
+             speed += 4f * Time.deltaTime;
          }
-         if(Input.GetKeyUp(KeyCode.LeftShift))
+         else if (Input.GetKeyUp(KeyCode.LeftShift))
          {
-             speed = 3.0f;
+             speed = minSpeed;
          }
-         
+
          Vector2 move = new Vector2(horizontal, vertical);
          
          if(Input.GetKeyDown(KeyCode.C))
@@ -74,10 +87,15 @@ public class RubyController : MonoBehaviour
 
          if (Input.GetKeyDown(KeyCode.X))
          {
-             RaycastHit2D hit = Physics2D.Raycast((rigidbody2d.position + Vector2.up * 0.2f), lookDirection, 1.5f, LayerMask.GetMask("NPC"));
+             RaycastHit2D hit = Physics2D.Raycast(rigidbody2d.position + Vector2.up * 0.2f, 
+                 lookDirection, 1.5f, LayerMask.GetMask("NPC"));
              if (hit.collider != null)
              {
-                 Debug.Log("Raycast has hit the object " + hit.collider.gameObject);
+                 NonPlayerCharacter character = hit.collider.GetComponent<NonPlayerCharacter>();
+                 if (character != null)
+                 {
+                     character.DisplayDialogue();
+                 }
              }
          }
      }
@@ -95,19 +113,22 @@ public class RubyController : MonoBehaviour
      {
          if (amount < 0)
          {
+             animator.SetTrigger("Hit");
              if (isInvincible)
                  return;
              isInvincible = true;
              invincibleTimer = timeInvincible;
          }
-         animator.SetTrigger("Hit");
+
          currentHealth = Mathf.Clamp(currentHealth + amount, 0, maxHealth);
          UIHealthBar.instance.SetValue(currentHealth / (float)maxHealth);
      }
 
      void Launch()
      {
-         GameObject projectileObject = Instantiate(projectilePrefab, rigidbody2d.position + Vector2.up * 0.5f, Quaternion.identity);
+         GameObject projectileObject = Instantiate(projectilePrefab, 
+             rigidbody2d.position + Vector2.up * 0.5f, 
+             Quaternion.identity);
 
          Projectile projectile = projectileObject.GetComponent<Projectile>(); 
          projectile.Launch(lookDirection, 300);

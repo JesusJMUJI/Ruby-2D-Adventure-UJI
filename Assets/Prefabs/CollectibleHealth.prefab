@@ -135,10 +135,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: CollecPickParticle
       objectReference: {fileID: 0}
-    - target: {fileID: 4272574288763414138, guid: a0d882e8699733d4497389885a706192, type: 3}
-      propertyPath: looping
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4272574288763414139, guid: a0d882e8699733d4497389885a706192, type: 3}
       propertyPath: m_RootOrder
       value: 0

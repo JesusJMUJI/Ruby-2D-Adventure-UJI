@@ -183,10 +183,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: SmokeEffects
       objectReference: {fileID: 0}
-    - target: {fileID: 6632313774559036979, guid: 412ea2bab943e96449e1d1da6607f80a, type: 3}
-      propertyPath: m_Layer
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 8877313478325560012, guid: 412ea2bab943e96449e1d1da6607f80a, type: 3}
       propertyPath: m_RootOrder
       value: 0
