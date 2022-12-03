@@ -14,6 +14,7 @@ public class EnemyController : MonoBehaviour
     public ParticleSystem hitEffect;
     bool broken = true;
     Animator animator;
+    AudioSource audioSource;
     
     // Start is called before the first frame update
     void Start()
@@ -74,6 +75,11 @@ public class EnemyController : MonoBehaviour
         hitEffect.Play();
         smokeEffect.Stop();
     }
+    
+    public void PlaySound(AudioClip clip)
+    {
+        audioSource.PlayOneShot(clip);
+    }
 
     void OnCollisionEnter2D(Collision2D other)
     {
@@ -82,5 +88,4 @@ public class EnemyController : MonoBehaviour
         {
             player.ChangeHealth(-1);
         }
-    }
-}
+    }}

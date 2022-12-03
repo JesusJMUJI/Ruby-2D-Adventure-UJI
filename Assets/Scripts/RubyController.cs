@@ -11,6 +11,7 @@ public class RubyController : MonoBehaviour
     public int maxHealth = 5;
     [SerializeField] private float timeInvincible = 2.0f;
     public int health { get { return currentHealth; } }
+    [Range(0,10)]
     public int currentHealth;
     [SerializeField] private bool isInvincible;
     [SerializeField] private float invincibleTimer;
@@ -28,25 +29,30 @@ public class RubyController : MonoBehaviour
     [Header("Shooting")]
     public GameObject projectilePrefab;
     
+    [Header("Sound")]
+    AudioSource audioSource;
+    public AudioClip throwSound;
+
     Animator animator;
     Vector2 lookDirection = new Vector2(1, 0);
     
+    
     #endregion
-
-    /*_____________________________________________________________________________________*/
-     // Start is called before the first frame update
-     void Start()
-     {
+    
+    #region START, UPDATE Y FIXED UPDATE
+    void Start()
+    {
          animator = GetComponent<Animator>();
          rigidbody2d = GetComponent<Rigidbody2D>();
          currentHealth = maxHealth;
+         audioSource = GetComponent<AudioSource>();
          
          Application.targetFrameRate = 165;
-     }
+    }
  
      // Update is called once per frame
-     void Update()
-     {
+    void Update()
+    {
          horizontal = Input.GetAxis("Horizontal");
          vertical = Input.GetAxis("Vertical");
 
@@ -98,41 +104,52 @@ public class RubyController : MonoBehaviour
                  }
              }
          }
-     }
+    }
  
-     void FixedUpdate()
-     {
-         Vector2 position = rigidbody2d.position;
-         position.x = position.x + speed * horizontal * Time.deltaTime;
-         position.y = position.y + speed * vertical * Time.deltaTime;
+    void FixedUpdate()
+    {
+        Vector2 position = rigidbody2d.position;
+        position.x = position.x + speed * horizontal * Time.deltaTime;
+        position.y = position.y + speed * vertical * Time.deltaTime;
  
-         rigidbody2d.MovePosition(position);
-     }
+        rigidbody2d.MovePosition(position);
+    }
+    #endregion
 
-     public void ChangeHealth(int amount)
-     {
-         if (amount < 0)
-         {
-             animator.SetTrigger("Hit");
-             if (isInvincible)
-                 return;
-             isInvincible = true;
-             invincibleTimer = timeInvincible;
-         }
+    #region Metodos
 
-         currentHealth = Mathf.Clamp(currentHealth + amount, 0, maxHealth);
-         UIHealthBar.instance.SetValue(currentHealth / (float)maxHealth);
-     }
+    public void ChangeHealth(int amount)
+    {
+        if (amount < 0)
+        {
+            animator.SetTrigger("Hit");
+            if (isInvincible)
+                return;
+            isInvincible = true;
+            invincibleTimer = timeInvincible;
+        }
 
-     void Launch()
-     {
-         GameObject projectileObject = Instantiate(projectilePrefab, 
-             rigidbody2d.position + Vector2.up * 0.5f, 
-             Quaternion.identity);
+        currentHealth = Mathf.Clamp(currentHealth + amount, 0, maxHealth);
+        UIHealthBar.instance.SetValue(currentHealth / (float)maxHealth);
+    }
 
-         Projectile projectile = projectileObject.GetComponent<Projectile>(); 
-         projectile.Launch(lookDirection, 300);
-         
-         animator.SetTrigger("Launch");
-     }
- }
+    void Launch()
+    {
+        GameObject projectileObject = Instantiate(projectilePrefab, 
+            rigidbody2d.position + Vector2.up * 0.5f, 
+            Quaternion.identity);
+
+        Projectile projectile = projectileObject.GetComponent<Projectile>(); 
+        projectile.Launch(lookDirection, 300);
+        
+        audioSource.PlayOneShot(throwSound);
+        animator.SetTrigger("Launch");
+    }
+
+    public void PlaySound(AudioClip clip)
+    {
+        audioSource.PlayOneShot(clip);
+    }
+    
+    #endregion
+}

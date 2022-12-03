@@ -124,6 +124,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   collectEffect: {fileID: 426195782101291513}
+  collectedClip: {fileID: 8300000, guid: af5f8b64e3f58f24c87ff8f789b04f6c, type: 3}
+  collectibleCollider: {fileID: 3016074384635044887}
 --- !u!1001 &4512920616715630467
 PrefabInstance:
   m_ObjectHideFlags: 0

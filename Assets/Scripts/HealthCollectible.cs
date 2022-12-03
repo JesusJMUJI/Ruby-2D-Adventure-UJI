@@ -3,6 +3,8 @@
 public class HealthCollectible : MonoBehaviour
 {
     public ParticleSystem collectEffect;
+    public AudioClip collectedClip;
+    public BoxCollider2D collectibleCollider;
     void Start()
     {
         GameObject go = Instantiate(collectEffect.gameObject);
@@ -18,9 +20,12 @@ public class HealthCollectible : MonoBehaviour
 
     private void Despawn(RubyController controller)
     {
+        collectibleCollider.enabled = false;
         collectEffect.Play();
         gameObject.GetComponent<SpriteRenderer>().enabled = false;
         controller.ChangeHealth(1);
-        Destroy(gameObject, 2);
+        Destroy(gameObject, 5);
+
+        controller.PlaySound(collectedClip);
     }
 }
