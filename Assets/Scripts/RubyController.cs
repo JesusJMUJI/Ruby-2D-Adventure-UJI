@@ -1,6 +1,8 @@
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SocialPlatforms;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class RubyController : MonoBehaviour
 {
@@ -47,7 +49,7 @@ public class RubyController : MonoBehaviour
          animator = GetComponent<Animator>();
          rigidbody2d = GetComponent<Rigidbody2D>();
          currentHealth = maxHealth;
-
+         Time.timeScale = 1;
          Application.targetFrameRate = 165;
     }
  
@@ -69,6 +71,16 @@ public class RubyController : MonoBehaviour
             }
         }
         
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
+        
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
+
         horizontal = Input.GetAxis("Horizontal");
         vertical = Input.GetAxis("Vertical");
 
