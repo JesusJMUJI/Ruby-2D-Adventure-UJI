@@ -17,7 +17,7 @@ public class Projectile : MonoBehaviour
         }
     }
     
-    public void Launch(Vector2 direction, float force)
+    public void Launch(Vector2 direction, float force = 5)
     {
         rigidbody2D.AddForce(direction * force);
     }

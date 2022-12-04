@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
+    
+    [Header("Movement")]
     public float speed;
     public bool vertical;
     public float changeTime = 3.0f;
@@ -10,18 +12,25 @@ public class EnemyController : MonoBehaviour
     float timer;
     int direction = 1;
     
+    [Header("Particles")]
     public ParticleSystem smokeEffect;
     public ParticleSystem hitEffect;
     bool broken = true;
     Animator animator;
-    AudioSource audioSource;
     
+    [Header("Audio")]
+    public AudioClip fixSound;
+    
+    private AudioSource _audioSource;
+
+
     // Start is called before the first frame update
     void Start()
     {
         rigidbody2D = GetComponent<Rigidbody2D>();
         timer = changeTime;
         animator = GetComponent<Animator>();
+        _audioSource = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -37,6 +46,7 @@ public class EnemyController : MonoBehaviour
         //remember ! inverse the test, so if broken is true !broken will be false and return won’t be executed.
         if(!broken)
         {
+            
             return;
         }
     }
@@ -47,6 +57,7 @@ public class EnemyController : MonoBehaviour
         
         if (vertical)
         {
+            
             position.y = position.y + Time.deltaTime * speed * direction;
             animator.SetFloat("Move X", 0);
             animator.SetFloat("Move Y", direction);
@@ -63,6 +74,7 @@ public class EnemyController : MonoBehaviour
         //remember ! inverse the test, so if broken is true !broken will be false and return won’t be executed.
         if(!broken)
         {
+            
             return;
         }
     }
@@ -74,11 +86,8 @@ public class EnemyController : MonoBehaviour
         animator.SetTrigger("Fixed");
         hitEffect.Play();
         smokeEffect.Stop();
-    }
-    
-    public void PlaySound(AudioClip clip)
-    {
-        audioSource.PlayOneShot(clip);
+        AudioSource.PlayClipAtPoint(fixSound, transform.position);
+        _audioSource.Stop();
     }
 
     void OnCollisionEnter2D(Collision2D other)
@@ -88,4 +97,6 @@ public class EnemyController : MonoBehaviour
         {
             player.ChangeHealth(-1);
         }
-    }}
+    }
+    
+}
