@@ -1,9 +1,5 @@
-using System;
 using System.Collections;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.SocialPlatforms;
-using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class RubyController : MonoBehaviour
@@ -14,7 +10,8 @@ public class RubyController : MonoBehaviour
     //
     public int maxHealth = 5;
     [SerializeField] private float timeInvincible = 2.0f;
-    public int health { get { return currentHealth; } }
+    public int Health => currentHealth;
+
     [Range(0,10)]
     public int currentHealth;
     [SerializeField] private bool isInvincible;
@@ -42,10 +39,11 @@ public class RubyController : MonoBehaviour
     [Header("UI")] 
     public GameObject gameOverPanel;
     public GameObject winPanel;
+    public Canvas controlsCanvas;
     Vector2 lookDirection = new Vector2(1, 0);
     Animator animator;
 
-    public static RubyController Instance;
+    public static RubyController instance;
     public int enemyCount;
     #endregion
     
@@ -53,9 +51,9 @@ public class RubyController : MonoBehaviour
 
     private void Awake()
     {
-        if (RubyController.Instance == null)
+        if (RubyController.instance == null)
         {
-            RubyController.Instance = this;
+            RubyController.instance = this;
             enemyCount = GameObject.FindGameObjectsWithTag("Enemy").Length;
         }
         else
@@ -72,10 +70,17 @@ public class RubyController : MonoBehaviour
          
          Application.targetFrameRate = 144;
          
-         gameOverPanel.SetActive(false); 
+         gameOverPanel.SetActive(false);
          winPanel.SetActive(false);
          AudioListener.pause = false;
          Time.timeScale = 1;
+
+         StartCoroutine(ControlsPanel());
+         IEnumerator ControlsPanel()
+         {
+             yield return new WaitForSeconds(5);
+                controlsCanvas.enabled = false;
+         }
     }
  
      // Update is called once per frame
@@ -117,7 +122,7 @@ public class RubyController : MonoBehaviour
 
         if (Input.GetKey(KeyCode.LeftShift) && speed <= maxSpeed)
         {
-            print("Sprinting"); ;
+            print("Sprinting");
             speed += 4f * Time.deltaTime;
         }
         else if (Input.GetKeyUp(KeyCode.LeftShift))
@@ -173,24 +178,15 @@ public class RubyController : MonoBehaviour
         enemyCount--;
         if (enemyCount <= 0)
         {
-            StartCoroutine(Wait());
+            StartCoroutine(WinCoroutine());
         }
     }
     
-    IEnumerator Wait()
-    {
-        yield return new WaitForSeconds(1);
-        winPanel.SetActive(true);
-        AudioListener.pause = true;
-        Time.timeScale = 0;
-    }
     public void ChangeHealth(int amount)
     {
         if (currentHealth == 0)
         {
-            gameOverPanel.SetActive(true);
-            AudioListener.pause = true;
-            Time.timeScale = 0;
+            StartCoroutine(LoseCoroutine());
         }
         if (amount < 0)
         {
@@ -234,5 +230,25 @@ public class RubyController : MonoBehaviour
         Debug.Log("The game has been closed");
     }
     
+    #endregion
+
+    #region Corrutinas
+    IEnumerator WinCoroutine()
+    {
+        yield return new WaitForSeconds(1);
+        winPanel.SetActive(true);
+        AudioListener.pause = true;
+        Time.timeScale = 0;
+    }
+
+    IEnumerator LoseCoroutine()
+    {
+        Time.timeScale = 0;
+        gameOverPanel.SetActive(true);
+        AudioListener.pause = true;
+        yield return new WaitForSeconds(1);
+    }
+    
+
     #endregion
 }

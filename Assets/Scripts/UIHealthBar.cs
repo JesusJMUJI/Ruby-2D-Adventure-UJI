@@ -26,7 +26,7 @@ public class UIHealthBar : MonoBehaviour
 
     void Start()
     {
-        var enemies = RubyController.Instance.enemyCount;
+        var enemies = RubyController.instance.enemyCount;
         originalSize = mask.rectTransform.rect.width;
         var speed = Ruby.GetComponent<RubyController>().speed;
     }
@@ -35,8 +35,8 @@ public class UIHealthBar : MonoBehaviour
     {
         var speed = Ruby.GetComponent<RubyController>().speed;
         speedText.text = "Speed:" + Mathf.Round(speed).ToString();
-        healthText.text = Mathf.Round(Ruby.GetComponent<RubyController>().health).ToString();
-        enemyCountTxt.text = "Enemies:" + RubyController.Instance.enemyCount.ToString();
+        healthText.text = Mathf.Round(Ruby.GetComponent<RubyController>().Health).ToString();
+        enemyCountTxt.text = "Enemies:" + RubyController.instance.enemyCount.ToString();
     }
 
     public void SetValue(float value)
