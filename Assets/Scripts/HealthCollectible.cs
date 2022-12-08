@@ -12,10 +12,11 @@ public class HealthCollectible : MonoBehaviour
     void OnTriggerEnter2D(Collider2D other)
     {
         RubyController controller = other.GetComponent<RubyController>();
-        if (controller.currentHealth < controller.maxHealth)
-        {
-            Despawn(controller);
-        }
+        if (controller != null)
+            if (controller.currentHealth < controller.maxHealth && other.CompareTag("Player"))
+            {
+                Despawn(controller);
+            }
     }
 
     private void Despawn(RubyController controller)

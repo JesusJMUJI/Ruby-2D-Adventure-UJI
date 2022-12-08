@@ -3,6 +3,7 @@ using UnityEngine;
 public class Projectile : MonoBehaviour
 {
     public new Rigidbody2D rigidbody2D;
+    public bool hasCollided = false;
     // Start is called before the first frame update
     void Awake()
     {
@@ -24,11 +25,13 @@ public class Projectile : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D other)
     {
-        Destroy(gameObject);
-        EnemyController e = other.collider.GetComponent<EnemyController>();
-        if (e != null)
+        
+        Debug.Log("Projectile collided with " + other.gameObject.name); 
+        EnemyController e = other.collider.GetComponent<EnemyController>(); 
+        if (e != null && e.CompareTag("Enemy")) 
         {
             e.Fix();
         }
+        Destroy(gameObject);
     }
 }

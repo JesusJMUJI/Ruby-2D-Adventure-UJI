@@ -10,11 +10,14 @@ public class UIHealthBar : MonoBehaviour
     public static UIHealthBar instance { get; private set; }
     
     public Image mask;
-    public TextMeshProUGUI speedText;
-    public TextMeshProUGUI enemyCountTxt;
     public GameObject Ruby;
     public float originalSize;
-    public Text healthText;
+
+    [Header("Texts")]
+    public TextMeshProUGUI speedText;
+    public TextMeshProUGUI enemyCountTxt;
+    public TextMeshProUGUI healthText;
+
     
     private void Awake()
     {
@@ -23,15 +26,17 @@ public class UIHealthBar : MonoBehaviour
 
     void Start()
     {
+        var enemies = RubyController.Instance.enemyCount;
         originalSize = mask.rectTransform.rect.width;
         var speed = Ruby.GetComponent<RubyController>().speed;
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         var speed = Ruby.GetComponent<RubyController>().speed;
         speedText.text = "Speed:" + Mathf.Round(speed).ToString();
         healthText.text = Mathf.Round(Ruby.GetComponent<RubyController>().health).ToString();
+        enemyCountTxt.text = "Enemies:" + RubyController.Instance.enemyCount.ToString();
     }
 
     public void SetValue(float value)

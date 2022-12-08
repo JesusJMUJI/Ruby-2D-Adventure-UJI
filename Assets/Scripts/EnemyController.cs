@@ -77,13 +77,14 @@ public class EnemyController : MonoBehaviour
             
             return;
         }
+        
     }
-
     public void Fix()
     {
         RubyController.Instance.FixedEnemy();
-        broken = false;
         rigidbody2D.simulated = false;
+        Debug.Log("Fixed");
+        broken = false;
         animator.SetTrigger("Fixed");
         hitEffect.Play();
         smokeEffect.Stop();

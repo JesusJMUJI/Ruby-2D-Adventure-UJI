@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SocialPlatforms;
@@ -26,7 +27,7 @@ public class RubyController : MonoBehaviour
     [Range(3f, 7f)]
     public float speed = 4.0f;
 
-    private float maxSpeed = 7.0f;
+    private float maxSpeed = 5.0f;
     private float minSpeed = 3.0f;
 
     [Header("Shooting")]
@@ -69,7 +70,7 @@ public class RubyController : MonoBehaviour
          rigidbody2d = GetComponent<Rigidbody2D>();
          currentHealth = maxHealth;
          
-         Application.targetFrameRate = 165;
+         Application.targetFrameRate = 144;
          
          gameOverPanel.SetActive(false); 
          winPanel.SetActive(false);
@@ -80,6 +81,7 @@ public class RubyController : MonoBehaviour
      // Update is called once per frame
     void Update()
     {
+        
         horizontal = Input.GetAxis("Horizontal");
         vertical = Input.GetAxis("Vertical");
         Vector2 move = new Vector2(horizontal, vertical);
@@ -103,7 +105,7 @@ public class RubyController : MonoBehaviour
             Debug.Log("Escape");
             Application.Quit();
         }
-        if(Input.GetKeyDown(KeyCode.C))
+        if(Input.GetKey(KeyCode.Mouse0))
         {
             Launch();
         }
@@ -156,13 +158,6 @@ public class RubyController : MonoBehaviour
  
     void FixedUpdate()
     {
-        if (enemyCount <= 0)
-        {
-            winPanel.SetActive(true);
-            AudioListener.pause = true;
-            Time.timeScale = 0;
-        }
-        
         Vector2 position = rigidbody2d.position;
         position.x = position.x + speed * horizontal * Time.deltaTime;
         position.y = position.y + speed * vertical * Time.deltaTime;
@@ -176,6 +171,18 @@ public class RubyController : MonoBehaviour
     public void FixedEnemy()
     {
         enemyCount--;
+        if (enemyCount <= 0)
+        {
+            StartCoroutine(Wait());
+        }
+    }
+    
+    IEnumerator Wait()
+    {
+        yield return new WaitForSeconds(1);
+        winPanel.SetActive(true);
+        AudioListener.pause = true;
+        Time.timeScale = 0;
     }
     public void ChangeHealth(int amount)
     {
@@ -187,7 +194,6 @@ public class RubyController : MonoBehaviour
         }
         if (amount < 0)
         {
-
             if (isInvincible)
                 return;
             isInvincible = true;
