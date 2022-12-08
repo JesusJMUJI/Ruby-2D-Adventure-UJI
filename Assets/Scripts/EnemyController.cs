@@ -81,6 +81,7 @@ public class EnemyController : MonoBehaviour
 
     public void Fix()
     {
+        RubyController.Instance.FixedEnemy();
         broken = false;
         rigidbody2D.simulated = false;
         animator.SetTrigger("Fixed");

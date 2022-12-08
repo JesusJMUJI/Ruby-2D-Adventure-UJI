@@ -1,3 +1,4 @@
+using System;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SocialPlatforms;
@@ -37,25 +38,51 @@ public class RubyController : MonoBehaviour
     public AudioSource movingSound;
     public AudioSource audioSource;
 
-    Animator animator;
+    [Header("UI")] 
+    public GameObject gameOverPanel;
+    public GameObject winPanel;
     Vector2 lookDirection = new Vector2(1, 0);
-    
-    
+    Animator animator;
+
+    public static RubyController Instance;
+    public int enemyCount;
     #endregion
     
     #region START, UPDATE Y FIXED UPDATE
+
+    private void Awake()
+    {
+        if (RubyController.Instance == null)
+        {
+            RubyController.Instance = this;
+            enemyCount = GameObject.FindGameObjectsWithTag("Enemy").Length;
+        }
+        else
+        {
+            Destroy(this.gameObject);
+        }
+    }
+
     void Start()
     {
          animator = GetComponent<Animator>();
          rigidbody2d = GetComponent<Rigidbody2D>();
          currentHealth = maxHealth;
-         Time.timeScale = 1;
+         
          Application.targetFrameRate = 165;
+         
+         gameOverPanel.SetActive(false); 
+         winPanel.SetActive(false);
+         AudioListener.pause = false;
+         Time.timeScale = 1;
     }
  
      // Update is called once per frame
     void Update()
     {
+        horizontal = Input.GetAxis("Horizontal");
+        vertical = Input.GetAxis("Vertical");
+        Vector2 move = new Vector2(horizontal, vertical);
         if (animator.GetCurrentAnimatorStateInfo(0).IsName("Moving"))
         {
             if (!movingSound.isPlaying)
@@ -73,16 +100,18 @@ public class RubyController : MonoBehaviour
         
         if (Input.GetKeyDown(KeyCode.Escape))
         {
+            Debug.Log("Escape");
             Application.Quit();
         }
-        
+        if(Input.GetKeyDown(KeyCode.C))
+        {
+            Launch();
+        }
         if (Input.GetKeyDown(KeyCode.R))
         {
+            Debug.Log("Resetting scene");
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
-
-        horizontal = Input.GetAxis("Horizontal");
-        vertical = Input.GetAxis("Vertical");
 
         if (Input.GetKey(KeyCode.LeftShift) && speed <= maxSpeed)
         {
@@ -93,15 +122,6 @@ public class RubyController : MonoBehaviour
         {
             speed = minSpeed;
         }
-
-        Vector2 move = new Vector2(horizontal, vertical);
-         
-        if(Input.GetKeyDown(KeyCode.C))
-        {
-            Launch();
-        }
-         
-         
         if (!Mathf.Approximately(move.x, 0.0f) || !Mathf.Approximately(move.y, 0.0f))
         {
             lookDirection.Set(move.x, move.y);
@@ -136,6 +156,13 @@ public class RubyController : MonoBehaviour
  
     void FixedUpdate()
     {
+        if (enemyCount <= 0)
+        {
+            winPanel.SetActive(true);
+            AudioListener.pause = true;
+            Time.timeScale = 0;
+        }
+        
         Vector2 position = rigidbody2d.position;
         position.x = position.x + speed * horizontal * Time.deltaTime;
         position.y = position.y + speed * vertical * Time.deltaTime;
@@ -146,8 +173,18 @@ public class RubyController : MonoBehaviour
 
     #region Metodos
 
+    public void FixedEnemy()
+    {
+        enemyCount--;
+    }
     public void ChangeHealth(int amount)
     {
+        if (currentHealth == 0)
+        {
+            gameOverPanel.SetActive(true);
+            AudioListener.pause = true;
+            Time.timeScale = 0;
+        }
         if (amount < 0)
         {
 
@@ -159,16 +196,13 @@ public class RubyController : MonoBehaviour
             animator.SetTrigger("Hit");
             audioSource.PlayOneShot(damagedSound);
         }
-
         currentHealth = Mathf.Clamp(currentHealth + amount, 0, maxHealth);
         UIHealthBar.instance.SetValue(currentHealth / (float)maxHealth);
     }
 
     void Launch()
     {
-        GameObject projectileObject = Instantiate(projectilePrefab, 
-            rigidbody2d.position + Vector2.up * 0.5f, 
-            Quaternion.identity);
+        GameObject projectileObject = Instantiate(projectilePrefab, rigidbody2d.position + Vector2.up * 0.5f, Quaternion.identity);
 
         Projectile projectile = projectileObject.GetComponent<Projectile>(); 
         projectile.Launch(lookDirection, 300);
@@ -180,6 +214,18 @@ public class RubyController : MonoBehaviour
     public void PlaySound(AudioClip clip)
     {
         audioSource.PlayOneShot(clip);
+    }
+    
+    public void ResetScene()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        Debug.Log("The scene has been reset");
+    }
+    
+    public void ExitGame()
+    {
+        Application.Quit(); 
+        Debug.Log("The game has been closed");
     }
     
     #endregion

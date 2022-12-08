@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2216157745557952977}
   - component: {fileID: 2398658855345597274}
   m_Layer: 11
-  m_Name: Text (TMP)
+  m_Name: TEXT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -152,6 +152,7 @@ GameObject:
   - component: {fileID: 4720807457366917225}
   - component: {fileID: 7837386481063112946}
   - component: {fileID: 3423468642316343942}
+  - component: {fileID: 2142700738}
   m_Layer: 11
   m_Name: Jambi
   m_TagString: Untagged
@@ -270,6 +271,20 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.9358105, y: 1.5408912}
   m_EdgeRadius: 0
+--- !u!114 &2142700738
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5521452212823276579}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c2aa547c6814d14da3dfe37d988e5cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  displayTime: 4
+  dialogueBox: {fileID: 8319630844432176744}
 --- !u!1 &5962883393026441226
 GameObject:
   m_ObjectHideFlags: 0
@@ -382,7 +397,7 @@ GameObject:
   - component: {fileID: 8075860537780555811}
   - component: {fileID: 4625203578051397305}
   m_Layer: 11
-  m_Name: Image
+  m_Name: DialogueBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
