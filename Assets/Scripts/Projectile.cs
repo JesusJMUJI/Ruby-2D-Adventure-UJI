@@ -14,9 +14,9 @@ public class Projectile : MonoBehaviour
 
     void Update()
     {
-        if (transform.position.magnitude > 1000.0f)
+        if (transform.position.magnitude > 1000.0f || !hasCollided)
         {
-            Destroy(gameObject);
+            Destroy(gameObject, 2f);
         }
     }
     
