@@ -105,7 +105,7 @@ public class RubyController : MonoBehaviour
             Debug.Log("Escape");
             Application.Quit();
         }
-        if(Input.GetKey(KeyCode.Mouse0))
+        if(Input.GetKeyDown(KeyCode.Mouse0))
         {
             Launch();
         }
