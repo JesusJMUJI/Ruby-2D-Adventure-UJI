@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Projectile : MonoBehaviour
@@ -32,6 +34,14 @@ public class Projectile : MonoBehaviour
         {
             e.Fix();
         }
+
+        StartCoroutine(Collide());
+    }
+
+    IEnumerator Collide()
+    {
+        yield return new WaitForSeconds(1);
+        rigidbody2D.simulated = false;
         Destroy(gameObject);
     }
 }
