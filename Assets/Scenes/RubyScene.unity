@@ -2732,7 +2732,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Left Click: Throw Cog
+  m_text: 'Left Click / C: Throw Cog
 
     X: Interact
 
