@@ -64,23 +64,23 @@ public class RubyController : MonoBehaviour
 
     void Start()
     {
-         animator = GetComponent<Animator>();
-         rigidbody2d = GetComponent<Rigidbody2D>();
-         currentHealth = maxHealth;
+        animator = GetComponent<Animator>();
+        rigidbody2d = GetComponent<Rigidbody2D>();
+        currentHealth = maxHealth;
          
-         Application.targetFrameRate = 144;
+        Application.targetFrameRate = 144;
          
-         gameOverPanel.SetActive(false);
-         winPanel.SetActive(false);
-         AudioListener.pause = false;
-         Time.timeScale = 1;
+        gameOverPanel.SetActive(false);
+        winPanel.SetActive(false);
+        AudioListener.pause = false;
+        Time.timeScale = 1;
 
-         StartCoroutine(ControlsPanel());
-         IEnumerator ControlsPanel()
-         {
-             yield return new WaitForSeconds(5);
-                controlsCanvas.enabled = false;
-         }
+        StartCoroutine(ControlsPanel());
+        IEnumerator ControlsPanel()
+        {
+            yield return new WaitForSeconds(5);
+            controlsCanvas.enabled = false;
+        }
     }
  
      // Update is called once per frame
