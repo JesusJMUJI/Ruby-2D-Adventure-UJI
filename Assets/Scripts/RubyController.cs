@@ -29,6 +29,8 @@ public class RubyController : MonoBehaviour
 
     [Header("Shooting")]
     public GameObject projectilePrefab;
+    public float projectileCooldown = 1f;
+    public bool canLaunch = true;
     
     [Header("Sound")]
     public AudioClip throwSound;
@@ -204,13 +206,23 @@ public class RubyController : MonoBehaviour
 
     void Launch()
     {
-        GameObject projectileObject = Instantiate(projectilePrefab, rigidbody2d.position + Vector2.up * 0.5f, Quaternion.identity);
-
-        Projectile projectile = projectileObject.GetComponent<Projectile>(); 
-        projectile.Launch(lookDirection, 300);
-        
-        audioSource.PlayOneShot(throwSound);
-        animator.SetTrigger("Launch");
+        if (canLaunch)
+        {
+            canLaunch = false;
+            GameObject projectileObject = Instantiate(projectilePrefab, rigidbody2d.position + Vector2.up * 0.5f,
+                Quaternion.identity);
+            Projectile projectile = projectileObject.GetComponent<Projectile>();
+            projectile.Launch(lookDirection, 300);
+            animator.SetTrigger("Launch");
+            audioSource.PlayOneShot(throwSound);
+            StartCoroutine(ProjectileCooldownCoroutine());
+        }
+    }
+    
+    IEnumerator ProjectileCooldownCoroutine()
+    {
+        yield return new WaitForSeconds(0.2f);
+        canLaunch = true;
     }
 
     public void PlaySound(AudioClip clip)
