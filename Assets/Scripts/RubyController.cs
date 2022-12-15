@@ -29,7 +29,6 @@ public class RubyController : MonoBehaviour
 
     [Header("Shooting")]
     public GameObject projectilePrefab;
-    public float projectileCooldown = 1f;
     public bool canLaunch = true;
     
     [Header("Sound")]

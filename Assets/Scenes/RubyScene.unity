@@ -3774,9 +3774,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 963891503}
+  - component: {fileID: 963891506}
   - component: {fileID: 963891505}
   - component: {fileID: 963891504}
-  - component: {fileID: 963891506}
   - component: {fileID: 963891507}
   m_Layer: 5
   m_Name: Health
@@ -17411,10 +17411,10 @@ RectTransform:
   m_Father: {fileID: 963891503}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.4120882, y: 0.36436236}
-  m_AnchorMax: {x: 0.961, y: 0.66853595}
-  m_AnchoredPosition: {x: -0.00015258789, y: 2.4310493}
-  m_SizeDelta: {x: 0.1402893, y: 5.1379013}
+  m_AnchorMin: {x: 0.41200003, y: 0.36436236}
+  m_AnchorMax: {x: 0.961, y: 0.69011134}
+  m_AnchoredPosition: {x: -0.00015258789, y: -0.06895065}
+  m_SizeDelta: {x: 0.1402893, y: 0.1379013}
   m_Pivot: {x: -0.00000008195639, y: 0.5}
 --- !u!114 &2102792707
 MonoBehaviour:
